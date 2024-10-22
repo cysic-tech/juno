@@ -315,8 +315,9 @@ require (
 )
 
 replace (
-
-	github.com/cysic-labs/cysic-network => ../cysic-network
+	// use cysic cosmos-sdk
+	github.com/cosmos/cosmos-sdk => github.com/cysic-tech/cosmos-sdk v0.0.0-20241021115552-10dc172b8d4f
+	github.com/cysic-labs/cysic-network => github.com/cysic-tech/cysic-network v1.0.2
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
 	github.com/syndtr/goleveldb => github.com/syndtr/goleveldb v1.0.1-0.20210819022825-2ae1ddf74ef7
 	github.com/tendermint/tendermint => github.com/cometbft/cometbft v0.34.29
