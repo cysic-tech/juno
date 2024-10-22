@@ -11,6 +11,10 @@ import (
 	"github.com/forbole/juno/v4/database"
 	"github.com/forbole/juno/v4/database/builder"
 	"github.com/forbole/juno/v4/modules/registrar"
+
+	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
+	cysicapp "github.com/cysic-labs/cysic-network/app"
+	cysiccrypto "github.com/cysic-labs/cysic-network/crypto/ethsecp256k1"
 )
 
 // Config contains all the configuration for the "parse" command
@@ -71,6 +75,18 @@ func (cfg *Config) GetEncodingConfigBuilder() EncodingConfigBuilder {
 			std.RegisterInterfaces(encodingConfig.InterfaceRegistry)
 			simapp.ModuleBasics.RegisterLegacyAminoCodec(encodingConfig.Amino)
 			simapp.ModuleBasics.RegisterInterfaces(encodingConfig.InterfaceRegistry)
+
+			// register cysic app
+			cysicapp.ModuleBasics.RegisterLegacyAminoCodec(encodingConfig.Amino)
+			cysicapp.ModuleBasics.RegisterInterfaces(encodingConfig.InterfaceRegistry)
+
+			// register cysic crypto
+			encodingConfig.Amino.RegisterConcrete(cysiccrypto.PubKey{}, "cysicmint/PubKey", nil)
+			encodingConfig.InterfaceRegistry.RegisterImplementations(
+				(*cryptotypes.PubKey)(nil),
+				&cysiccrypto.PubKey{},
+			)
+
 			return encodingConfig
 		}
 	}
